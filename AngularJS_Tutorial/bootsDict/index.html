@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrapping Dictionary</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+
+    <link rel = "stylesheet" type="text/css" href="style.css" />
+
+    <script src="langLogic.js"></script>
+    <script src="front.js"></script>
+</head>
+<body>
+    <h1>Bootstrapping Dictionary</h1>
+    <div ng-app="dictionary" ng-controller="myCtrl">
+      <form>
+        Filter: <input type="text" ng-change="applyFilter(filterMask, filerType)" ng-model="filterMask" /><br/>
+        <input type="radio" ng-model="filerType" value="startby">All that start by
+        <input type="radio" ng-model="filerType" value="regex">Filter by Regex
+      </form>
+       <table id="maintable">
+           <th></th>
+           <th>Word</th>
+           <th>Synonym</th>
+           <th>POS</th>
+           <th>Meaning</th>
+           <th>Translation</th>
+           <th>English Equiv.</th>
+           <th></th>
+
+           <tr ng-repeat="entry in entries">
+               <td>{{ $index + 1}}</td>
+               <td ng-bind="entry.word"></td>
+               <td ng-bind="entry.synonym"></td>
+               <td ng-bind="entry.POS"></td>
+               <td ng-bind="entry.meaning"></td>
+               <td ng-bind="entry.translation"></td>
+               <td ng-bind="entry.english"></td>
+               <td>
+                <input type="button" ng-click="edit($index)" value="Edit" />
+              </td>
+           </tr>
+           <tr>
+              <form novalidate ng-submit="addEntry()">
+               <td></td>
+               <td><input type="text" ng-model="new.word" placeholder="Add a new word" name="word" /> </td>
+               <td><input type="text" ng-model="new.synonym" value="?" name="Synonym" /></td>
+               <td><input type="text" ng-model="new.POS" name="word" /> </td>
+               <td><input type="text" ng-model="new.meaning" name="mean" /></td>
+               <td><input type="text" ng-model="new.translation" name="trans" /></td>
+               <td><input type="text" ng-model="new.english" name="eng" /></td>
+               <td><input type="submit" id="btn_addentry()" value="Add" /></td>
+             </form>
+           </tr>
+       </table>
+       <br/>
+      {{ error }}
+    </div>
+</body>
+</html>
